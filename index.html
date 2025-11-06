@@ -1,47 +1,112 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Anthony David — Full Stack Developer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <script>
-      // Set initial theme based on localStorage
-      if (localStorage.getItem('ad-portfolio-theme') === 'light' || (!('ad-portfolio-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-        document.documentElement.classList.remove('dark')
-      } else {
-        document.documentElement.classList.add('dark')
-      }
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Anthony David — Full Stack Developer</title>
+  <meta name="description" content="Portfolio of Anthony David — Full Stack Developer. Projects, skills and contact." />
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0f1724;
+      --panel: #0b1220;
+      --muted: #94a3b8;
+      --accent: #14b8a6;
+      --card: rgba(255,255,255,0.03);
+      --glass: rgba(255,255,255,0.03);
+      --text: #e6eef6;
+    }
+    :root.light {
+      --bg: #f7fafc;
+      --panel: #ffffff;
+      --muted: #475569;
+      --accent: #0ea5a4;
+      --card: rgba(2,6,23,0.02);
+      --glass: rgba(2,6,23,0.02);
+      --text: #071228;
+    }
 
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-            },
-            colors: {
-              'bg-dark': '#0f1724',
-              'panel-dark': '#0b1220',
-              'text-dark': '#e6eef6',
-              'muted-dark': '#94a3b8',
-              'accent-dark': '#14b8a6',
-              'bg-light': '#f7fafc',
-              'panel-light': '#ffffff',
-              'text-light': '#071228',
-              'muted-light': '#475569',
-              'accent-light': '#0ea5a4',
-            }
-          }
-        }
-      }
-    </script>
-  <script type="importmap">
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg,var(--bg), #071127 80%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      scroll-behavior:smooth;
+      transition:background .35s, color .35s;
+    }
+
+    /* Layout */
+    .container{max-width:1100px;margin:0 auto;padding:0 20px;}
+    header{position:fixed;top:16px;left:0;right:0;z-index:40}
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:12px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);
+      padding:10px 18px;border-radius:12px;
+      margin:0 auto;backdrop-filter:blur(6px);width:calc(100% - 40px);max-width:1100px;
+      box-shadow:0 4px 18px rgba(2,6,23,0.4);
+    }
+    .brand{font-weight:700;letter-spacing:0.2px}
+    .nav a{color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:8px}
+    .nav a:hover{color:var(--accent);background:var(--card)}
+    .theme-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
+    .hero{min-height:86vh;display:grid;place-items:center;text-align:center;padding:80px 20px}
+    .hero h1{font-size:clamp(28px,5vw,56px);margin:0 0 12px;line-height:1}
+    .hero p{margin:0 auto;max-width:760px;color:var(--muted);font-size:clamp(15px,1.6vw,18px)}
+    .cta{margin-top:22px;display:inline-block;background:var(--accent);color:var(--panel);padding:12px 20px;border-radius:10px;font-weight:600;text-decoration:none}
+
+    section{padding:72px 0}
+    .section-title{display:flex;flex-direction:column;align-items:center;margin-bottom:28px}
+    .section-title h2{margin:0;font-size:26px}
+    .section-title .line{width:72px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--accent),transparent);margin-top:10px}
+
+    /* About */
+    .card{background:linear-gradient(180deg,var(--glass),transparent);padding:22px;border-radius:14px;box-shadow:0 10px 30px rgba(2,6,23,0.5)}
+    .about-text{color:var(--muted);line-height:1.7}
+
+    /* Skills */
+    .skill-grid{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+    .skill-col{min-width:240px;flex:1;background:var(--panel);padding:18px;border-radius:12px}
+    .skill-pill{display:inline-block;background:rgba(20,184,166,0.1);color:var(--accent);padding:8px 12px;border-radius:999px;margin:6px 6px 0 0;font-weight:600;font-size:14px}
+
+    /* Projects */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+    .proj{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;overflow:hidden;transition:transform .25s, box-shadow .25s;cursor:pointer;position:relative}
+    .proj:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(2,6,23,0.6)}
+    .proj img{width:100%;height:160px;object-fit:cover;display:block}
+    .proj .body{padding:14px}
+    .proj h3{margin:0 0 8px;font-size:18px}
+    .proj p{margin:0 0 12px;color:var(--muted);font-size:14px}
+    .tags{display:flex;flex-wrap:wrap;gap:8px}
+    .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(20,184,166,0.08);color:var(--accent);font-weight:700}
+
+    .proj-links{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+    .link{color:var(--muted);text-decoration:none;font-weight:600}
+    .link:hover{color:var(--accent)}
+
+    /* Contact */
+    .contact-grid{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;align-items:center}
+    .contact-card{min-width:260px;background:var(--panel);padding:16px;border-radius:12px;text-align:center}
+    .contact-card a{color:var(--accent);text-decoration:none;font-weight:700}
+
+    footer{padding:26px 0;text-align:center;color:var(--muted);font-size:14px;border-top:1px solid rgba(255,255,255,0.03)}
+
+    /* small */
+    @media (max-width:720px){ .nav{padding:10px 14px} .nav a{display:none} .nav a.mobile-show{display:inline-block} }
+
+    /* reveal animation for sections */
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease, transform .6s ease}
+    .reveal.show{opacity:1;transform:none}
+
+    /* tilt helper */
+    .tilt{transform-style:preserve-3d;will-change:transform}
+  </style>
+<script type="importmap">
 {
   "imports": {
     "react/": "https://aistudiocdn.com/react@^19.2.0/",
@@ -51,7 +116,255 @@
 }
 </script>
 </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<body>
+  <header>
+    <div class="nav container" role="navigation" aria-label="Main navigation">
+      <div class="brand">Anthony David</div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact" class="mobile-show">Contact</a>
+        <button id="themeToggle" class="theme-btn" aria-pressed="false">Toggle Theme</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Hi — I'm <strong style="color:var(--accent)">Anthony David</strong></h1>
+        <p>Full Stack Developer. I build sleek, modern web apps with React, TypeScript, and reliable backends. Below are some of my projects — feel free to reach out.</p>
+        <div style="margin-top:18px">
+          <a class="cta" href="#projects">See my work</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="container reveal">
+      <div class="section-title">
+        <h2>About</h2>
+        <div class="line"></div>
+      </div>
+      <div class="card" style="max-width:900px;margin:0 auto">
+        <p class="about-text">I'm <strong>Anthony David</strong>, a Full Stack Developer focused on building performant, maintainable, and delightful user experiences. I use modern frontend libraries like React and TypeScript and build robust backends with Node, Python, or Java depending on needs. I value clean code, accessibility, and products that solve real problems.</p>
+      </div>
+    </section>
+
+    <section id="skills" class="reveal">
+      <div class="container">
+        <div class="section-title">
+          <h2>Skills</h2>
+          <div class="line"></div>
+        </div>
+        <div class="skill-grid">
+          <div class="skill-col card">
+            <h3 style="color:var(--accent);text-align:center">Frontend</h3>
+            <div style="margin-top:12px">
+              <span class="skill-pill">HTML</span>
+              <span class="skill-pill">CSS</span>
+              <span class="skill-pill">React</span>
+              <span class="skill-pill">JSON</span>
+            </div>
+          </div>
+          <div class="skill-col card">
+            <h3 style="color:var(--accent);text-align:center">Backend</h3>
+            <div style="margin-top:12px">
+              <span class="skill-pill">JavaScript</span>
+              <span class="skill-pill">TypeScript</span>
+              <span class="skill-pill">Python</span>
+              <span class="skill-pill">Java</span>
+              <span class="skill-pill">C#</span>
+              <span class="skill-pill">C++</span>
+            </div>
+          </div>
+          <div class="skill-col card">
+            <h3 style="color:var(--accent);text-align:center">Database & Others</h3>
+            <div style="margin-top:12px">
+              <span class="skill-pill">SQL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="reveal">
+      <div class="container">
+        <div class="section-title">
+          <h2>Projects</h2>
+          <div class="line"></div>
+        </div>
+
+        <div class="grid" id="projectsGrid">
+          <!-- Project 1 -->
+          <article class="proj tilt" data-tilt>
+            <img src="https://picsum.photos/seed/poetry/800/600" alt="Poetry-haven screenshot">
+            <div class="body">
+              <h3>Poetry-haven</h3>
+              <p>A lightweight HTML project for displaying poems and micro-poetry — clean UI for readers.</p>
+              <div class="tags"><span class="tag">HTML</span></div>
+              <div class="proj-links">
+                <div>
+                  <a class="link" href="https://anthonyst234.github.io/Poetry-haven" target="_blank" rel="noopener">Live</a>
+                  &nbsp;•&nbsp;
+                  <a class="link" href="https://github.com/anthonyst234/Poetry-haven" target="_blank" rel="noopener">Repo</a>
+                </div>
+                <a class="link" href="https://github.com/anthonyst234/Poetry-haven" target="_blank" rel="noopener">↗</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="proj tilt" data-tilt>
+            <img src="https://picsum.photos/seed/wallpaper/800/600" alt="wallpaper-creator screenshot">
+            <div class="body">
+              <h3>wallpaper-creator</h3>
+              <p>Create wallpapers from prompts — likely uses TypeScript to generate images or templates.</p>
+              <div class="tags"><span class="tag">TypeScript</span></div>
+              <div class="proj-links">
+                <div>
+                  <a class="link" href="https://anthonyst234.github.io/wallpaper-creator" target="_blank" rel="noopener">Live</a>
+                  &nbsp;•&nbsp;
+                  <a class="link" href="https://github.com/anthonyst234/wallpaper-creator" target="_blank" rel="noopener">Repo</a>
+                </div>
+                <a class="link" href="https://github.com/anthonyst234/wallpaper-creator" target="_blank" rel="noopener">↗</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="proj tilt" data-tilt>
+            <img src="https://picsum.photos/seed/ecom/800/600" alt="test-5 screenshot">
+            <div class="body">
+              <h3>test-5 (ecom)</h3>
+              <p>An e-commerce starter project showing product pages, cart UX and basic checkout flows.</p>
+              <div class="tags"><span class="tag">TypeScript</span><span class="tag">React</span></div>
+              <div class="proj-links">
+                <div>
+                  <a class="link" href="https://anthonyst234.github.io/test-5" target="_blank" rel="noopener">Live</a>
+                  &nbsp;•&nbsp;
+                  <a class="link" href="https://github.com/anthonyst234/test-5" target="_blank" rel="noopener">Repo</a>
+                </div>
+                <a class="link" href="https://github.com/anthonyst234/test-5" target="_blank" rel="noopener">↗</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 4 -->
+          <article class="proj tilt" data-tilt>
+            <img src="https://picsum.photos/seed/dashboard/800/600" alt="tony-dash-board screenshot">
+            <div class="body">
+              <h3>tony-dash-board</h3>
+              <p>A dashboard UI project (analytics / management panel) built with TypeScript.</p>
+              <div class="tags"><span class="tag">TypeScript</span><span class="tag">Dashboard</span></div>
+              <div class="proj-links">
+                <div>
+                  <a class="link" href="https://anthonyst234.github.io/tony-dash-board" target="_blank" rel="noopener">Live</a>
+                  &nbsp;•&nbsp;
+                  <a class="link" href="https://github.com/anthonyst234/tony-dash-board" target="_blank" rel="noopener">Repo</a>
+                </div>
+                <a class="link" href="https://github.com/anthonyst234/tony-dash-board" target="_blank" rel="noopener">↗</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="reveal">
+      <div class="container">
+        <div class="section-title">
+          <h2>Contact</h2>
+          <div class="line"></div>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card card">
+            <div style="font-size:18px;font-weight:700;color:var(--accent)">Email</div>
+            <div style="margin-top:8px"><a href="mailto:anthonystunt234@gmail.com">anthonystunt234@gmail.com</a></div>
+          </div>
+
+          <div class="contact-card card">
+            <div style="font-size:18px;font-weight:700;color:var(--accent)">Phone</div>
+            <div style="margin-top:8px"><a href="tel:+2348107676542">08107676542</a></div>
+          </div>
+
+          <div class="contact-card card">
+            <div style="font-size:18px;font-weight:700;color:var(--accent)">GitHub</div>
+            <div style="margin-top:8px"><a href="https://github.com/anthonyst234" target="_blank" rel="noopener">github.com/anthonyst234</a></div>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;text-align:center">
+          <small style="color:var(--muted)">I don't have direct access to your accounts — links point to your public GitHub profile and repos.</small>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Anthony David — Built with HTML, CSS & JavaScript</div>
+  </footer>
+
+  <script>
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // theme based on localStorage
+    (function(){
+      const root = document.documentElement;
+      const stored = localStorage.getItem('a_theme');
+      if(stored === 'light') root.classList.add('light');
+      const btn = document.getElementById('themeToggle');
+      btn.addEventListener('click', () => {
+        const isLight = root.classList.toggle('light');
+        localStorage.setItem('a_theme', isLight ? 'light' : 'dark');
+        btn.setAttribute('aria-pressed', isLight ? 'true' : 'false');
+      });
+    })();
+
+    // reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting) en.target.classList.add('show');
+      });
+    }, {threshold:0.12});
+    reveals.forEach(r=>io.observe(r));
+
+    // subtle tilt effect for project cards
+    const tilts = document.querySelectorAll('[data-tilt]');
+    tilts.forEach(el=>{
+      el.addEventListener('mousemove', (e)=>{
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        const dx = (x - cx) / cx;
+        const dy = (y - cy) / cy;
+        const tiltX = dy * -6; // rotateX
+        const tiltY = dx * 8;  // rotateY
+        el.style.transform = `perspective(900px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(6px)`;
+      });
+      el.addEventListener('mouseleave', ()=> {
+        el.style.transform = '';
+      });
+    });
+
+    // small accessibility: show mobile nav links on small widths
+    function updateNav(){
+      const small = window.innerWidth <= 720;
+      document.querySelectorAll('.nav a').forEach(a=>{
+        if(small){
+          if(a.classList.contains('mobile-show')) a.style.display='inline-block';
+          else a.style.display='none';
+        } else a.style.display='inline-block';
+      });
+    }
+    window.addEventListener('resize', updateNav);
+    updateNav();
+  </script>
+</body>
 </html>
